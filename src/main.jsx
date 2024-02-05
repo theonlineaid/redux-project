@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 // All extra Css 
 import "./index.css";
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
+import 'react-multi-carousel/lib/styles.css';
 
 // All Provider                 
 import { Provider } from 'react-redux'

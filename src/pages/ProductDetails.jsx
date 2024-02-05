@@ -8,6 +8,7 @@ import InnerImageZoom from 'react-inner-image-zoom';
 import MainLayout from '../layout/MainLayout';
 import { fetchRelatedProducts } from '../redux/features/product/relatedProductSlice';
 import Loading from '../compoments/Loading';
+import RelatedSliderProduct from '../compoments/RelatedSliderProduct';
 
 const ProductDetails = () => {
     const { productId } = useParams();
@@ -81,26 +82,23 @@ const ProductDetails = () => {
                         <button onClick={handleAddToCart}>Add to Cart</button>
                     </div>
                 </div>
+
+                <h2>Related Products</h2>
                 {relatedProducts.length > 0 && (
-                    <div>
-                        <h2>Related Products</h2>
-
-                        <div style={{ display: "flex" }}>
-                            {/* Exclude the selected product from the list */}
-                            {relatedProducts
-                                .filter(product => product.id !== selectedProduct.id)
-                                .map((product) => (
-                                    <div key={product.id}>
-                                        <Link to={`/product/${product.id}`}>
-                                            <img style={{ width: 300 }} src={product.images[0]} alt={product.name} />
-                                        </Link>
-                                        <p>{product.title}</p>
-                                        {/* Display other related product details */}
-                                    </div>
-                                ))}
-                        </div>
-
-                    </div>
+                    <RelatedSliderProduct >
+                        {/* Exclude the selected product from the list */}
+                        {relatedProducts
+                            .filter(product => product.id !== selectedProduct.id)
+                            .map((product) => (
+                                <div key={product.id}>
+                                    <Link to={`/product/${product.id}`}>
+                                        <img style={{ width: 300 }} src={product.images[0]} alt={product.name} />
+                                    </Link>
+                                    <p>{product.title}</p>
+                                    {/* Display other related product details */}
+                                </div>
+                            ))}
+                    </RelatedSliderProduct>
                 )}
             </MainLayout>
         </>
