@@ -1,26 +1,35 @@
-import React, { useMemo, useState } from 'react';
-import { createAppTheme } from './theme';
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { useSelector } from "react-redux";
+import { lightTheme, darkTheme, customTheme1 } from "./theme";
 
-export default function CustomTheme({ children }) {
-  const [mode, setMode] = useState("light");
-  const darkMode = useSelector((state) => state.theme.darkMode);
+const CustomTheme = ({ children }) => {
+  // const themeMode = useSelector((state) => state.theme.themeMode);
+  const themeMode = useSelector((state) => state.theme.mode);
 
-  useMemo(() => {
-    if (darkMode) {
-      setMode("dark");
-    } else {
-      setMode("light");
+  const selectTheme = () => {
+    switch (themeMode) {
+      case "light":
+        return lightTheme;
+      case "dark":
+        return darkTheme;
+      case "custom1":
+        return customTheme1;
+      // Add cases for more custom themes if needed
+      // Example:
+      case "custom2":
+        return customTheme2;
+      default:
+        return lightTheme; // Default to light theme
     }
-  }, [darkMode]);
-
-  const theme = useMemo(() => createAppTheme(mode), [mode]);
+  };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={selectTheme()}>
       <CssBaseline />
       {children}
     </ThemeProvider>
   );
-}
+};
+
+export default CustomTheme;
