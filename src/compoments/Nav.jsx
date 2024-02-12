@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ThemeSwitchWithIcon from '../theme/ThemeSwitchWithIcon';
 import Search from '../compoments/search/Search';
+import Setting from '../theme/Setting';
 
 // import { CartContext } from '../contexts/CartContext';
 
@@ -32,6 +33,8 @@ export default function Nav() {
                     <LocalMallOutlinedIcon />
                     <span>{cartItems.length}</span>
                 </Link>
+                
+                <Setting />
             </div>
         </header>
     )

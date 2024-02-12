@@ -9,6 +9,7 @@ import MainLayout from '../layout/MainLayout';
 import { fetchRelatedProducts } from '../redux/features/product/relatedProductSlice';
 import Loading from '../compoments/Loading';
 import RelatedSliderProduct from '../compoments/RelatedSliderProduct';
+import { Button } from '@mui/material';
 
 const ProductDetails = () => {
     const { productId } = useParams();
@@ -79,7 +80,7 @@ const ProductDetails = () => {
                         <p>Title: {selectedProduct.title}</p>
                         <p>Description: {selectedProduct.description}</p>
                         <p>Price per unit: ${selectedProduct.price}</p>
-                        <button onClick={handleAddToCart}>Add to Cart</button>
+                        <Button variant="contained" onClick={handleAddToCart}>Add to Cart</Button>
                     </div>
                 </div>
 

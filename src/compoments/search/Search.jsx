@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchProducts } from '../../redux/features/serach/searchSlice';
 import { Link } from 'react-router-dom';
+import { useTheme } from '@mui/material';
 
 const Search = () => {
     const dispatch = useDispatch();
@@ -9,9 +10,12 @@ const Search = () => {
     const loading = useSelector((state) => state.search.loading);
     const error = useSelector((state) => state.search.error);
     const [searchQuery, setSearchQuery] = useState('');
+
     const [isInputFocused, setIsInputFocused] = useState(false);
     const searchResultsRef = useRef(null);
     const inputSearchRef = useRef(null);
+
+    const theme = useTheme()
 
     const handleSearch = () => {
         // dispatch(searchProducts(searchQuery));
@@ -59,7 +63,7 @@ const Search = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
                 ref={inputSearchRef} 
             />
             <button onClick={handleSearch}>Search</button>
@@ -72,7 +76,7 @@ const Search = () => {
 
                     style={{
                         position: 'absolute',
-                        background: 'chocolate',
+                        background: theme.palette.info.main,
                         zIndex: 1111111111,
                         height: '300px',
                         width: "300px",

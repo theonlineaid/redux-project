@@ -7,12 +7,16 @@ import { fetchProducts } from './redux/features/product/productSlice'
 
 import { addToCart } from './redux/features/cart/cartSlice';
 import { Link } from 'react-router-dom'
-import { Button } from '@mui/material';
+import { Button, Paper, useTheme } from '@mui/material';
 
 
 function App() {
 
-  
+  const theme = useTheme()
+
+  console.log(theme)
+
+
 
   const count = useSelector((state) => state.counter.value)
   const products = useSelector((state) => state.product);
@@ -52,13 +56,13 @@ function App() {
   console.log(products);
   return (
     <>
-        <MainLayout>
-          
+      <MainLayout>
 
-          <div style={cardStyle}>
-            {products.entities && products.entities.map(product => (
-              <React.Fragment key={product.id} >
 
+        <div style={cardStyle}>
+          {products.entities && products.entities.map(product => (
+            <React.Fragment key={product.id} >
+              <Paper>
 
                 <div>
 
@@ -71,18 +75,19 @@ function App() {
 
                   <br />
                   {/* <button onClick={() => handleAddToCart(product)}>Add to Cart</button> */}
-                  <Button color="warning" onClick={() => handleAddToCart(product)} variant="contained">Add to Card</Button>
+                  <Button onClick={() => handleAddToCart(product)} variant="contained">Add to Card</Button>
 
 
                 </div>
+              </Paper>
 
 
-                {/* // is recommendation  */}
-              </React.Fragment>
-            ))}
-          </div>
-          {/* <Products /> */}
-        </MainLayout>
+              {/* // is recommendation  */}
+            </React.Fragment>
+          ))}
+        </div>
+        {/* <Products /> */}
+      </MainLayout>
     </>
   )
 }

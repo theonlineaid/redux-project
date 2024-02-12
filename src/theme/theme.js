@@ -9,10 +9,10 @@ export const lightTheme = createTheme({
       main: "#fffbeb",
     },
     divider: "#fde68a",
-    background: {
-      default: "#fbbf24",
-      paper: "#fbbf24",
-    },
+    // background: {
+    //   default: "#fbbf24",
+    //   paper: "#fbbf24",
+    // },
     text: {
       primary: "#000",
       secondary: "#27272a",
@@ -40,20 +40,35 @@ export const darkTheme = createTheme({
 
 export const customTheme1 = createTheme({
   palette: {
-    mode: "light",
+    mode: "dark",
+    common: {
+      "black": "#000",
+      "white": "#fff"
+    },
     primary: {
-      main: "#30D0F4", // Change to your desired primary color
+      lighter: '#D0F2FF',
+      light: '#74CAFF',
+      main: '#1890FF',
+      dark: '#0C53B7',
+      darker: '#04297A',
+      contrastText: '#fff',
     },
     secondary: {
-      main: "#B7161A", // Change to your desired secondary color
+      lighter: '#E9FCD4',
+      light: '#AAF27F',
+      main: '#54D62C',
+      dark: '#229A16',
+      darker: '#08660D',
+      contrastText: '#000',
     },
     background: {
-      default: "#D5FEF9", // Change to your desired background color
+      // default: "#D5FEF9", // Change to your desired background color
       paper: "#82F7FB", // Change to your desired paper color
     },
     text: {
       primary: "#8F8B89", // Change to your desired text color
       secondary: "#210C0D", // Change to your desired secondary text color
+      disabled: "rgba(0, 0, 0, 0.38)"
     },
   },
 });
