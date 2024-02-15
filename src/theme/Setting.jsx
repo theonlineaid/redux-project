@@ -19,11 +19,15 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 import { Link } from "react-router-dom";
 import FullScreenToggle from "../compoments/FullScreen/FullScreenToggle";
+import DarkMood from "./DarkMood";
+import LightMood from "./LightMood";
 const NAV_WIDTH = 280; // Set the width of the nav drawer
 
 function Setting() {
     const [openNav, setOpenNav] = useState(false);
     const [count, setCount] = useState(1);
+
+
     const toggleNav = () => {
         setOpenNav((prevOpen) => !prevOpen);
     };
@@ -66,7 +70,7 @@ function Setting() {
                                 <RestartAltIcon />
                             </IconButton>
 
-                            <IconButton variant="contained">
+                            <IconButton variant="contained" onClick={() => setOpenNav(false)}>
                                 <CloseIcon />
                             </IconButton>
                         </Box>
@@ -78,8 +82,13 @@ function Setting() {
                     <Divider sx={{ mb: 1 }} />
 
                     <Grid container spacing={0.5}>
+
                         <Grid item xs={6}>
-                            
+                            <LightMood />
+                        </Grid>
+
+                        <Grid item xs={6}>
+                            <DarkMood />
                         </Grid>
 
                         <FullScreenToggle />

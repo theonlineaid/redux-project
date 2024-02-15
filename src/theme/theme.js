@@ -2,6 +2,7 @@
 
 import { createTheme } from "@mui/material";
 
+
 export const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -9,10 +10,10 @@ export const lightTheme = createTheme({
       main: "#fffbeb",
     },
     divider: "#fde68a",
-    // background: {
-    //   default: "#fbbf24",
-    //   paper: "#fbbf24",
-    // },
+    background: {
+      default: "#ffff",
+      paper: "#f5f5f5",
+    },
     text: {
       primary: "#000",
       secondary: "#27272a",
@@ -62,7 +63,7 @@ export const customTheme1 = createTheme({
       contrastText: '#000',
     },
     background: {
-      // default: "#D5FEF9", // Change to your desired background color
+      default: "#D5FEF9", // Change to your desired background color
       paper: "#82F7FB", // Change to your desired paper color
     },
     text: {
@@ -73,6 +74,4 @@ export const customTheme1 = createTheme({
   },
 });
 
-// Add more custom themes as needed
-// Example:
-// export const customTheme2 = createTheme({ /* Theme object */ });
+
