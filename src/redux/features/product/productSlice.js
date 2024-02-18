@@ -1,6 +1,6 @@
-// productSlice.js
-
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+// baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' }),
 
 export const fetchProducts = createAsyncThunk('fetchProducts', async () => {
   const res = await fetch (`https://api.escuelajs.co/api/v1/products`);

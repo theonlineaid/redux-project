@@ -43,7 +43,7 @@ const FullScreenToggle = () => {
   return (
     <>
 
-      <Button fullWidth sx={{textTransform: 'capitalize'}} onClick={handleFullScreenToggle} variant="outlined" startIcon={isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}>
+      <Button  fullWidth sx={{textTransform: 'capitalize'}} onClick={handleFullScreenToggle} variant="contained" startIcon={isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}>
         {isFullScreen ? 'Exit Fullscreen' : 'Fullscreen'}
       </Button>
     </>

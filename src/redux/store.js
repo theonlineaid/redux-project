@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './rootReducer';
+import { productsApi } from './services/productsApi';
 
 // // Your Reducer path 
 // import counterReducer from './features/counter/counterSlice';
@@ -20,6 +21,7 @@ import rootReducer from './rootReducer';
 // Your main store 
 export const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(productsApi.middleware),
 });
 
 // export const store = configureStore({

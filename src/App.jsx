@@ -8,14 +8,18 @@ import { fetchProducts } from './redux/features/product/productSlice'
 import { addToCart } from './redux/features/cart/cartSlice';
 import { Link } from 'react-router-dom'
 import { Button, Paper, useTheme } from '@mui/material';
+import FlashingTime from './compoments/FlashTime/FlashingTime';
+import { useGetProductsQuery } from './redux/services/productsApi';
 
 
 function App() {
 
   const theme = useTheme()
 
-  console.log(theme)
+ 
 
+  const { data, error, isLoading } = useGetProductsQuery()
+  console.log(data, '22')
 
 
   const count = useSelector((state) => state.counter.value)
@@ -51,13 +55,16 @@ function App() {
 
 
 
+  const targetDate = new Date(); // Set your target date here
+  targetDate.setSeconds(targetDate.getSeconds() + 600); // Example: 10 minutes from now
 
 
-  console.log(products);
+  // console.log(products);
   return (
     <>
       <MainLayout>
 
+        {/* <FlashingTime  targetDate={targetDate}/> */}
 
         <div style={cardStyle}>
           {products.entities && products.entities.map(product => (

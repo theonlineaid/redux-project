@@ -27,20 +27,10 @@ function Setting() {
     const [openNav, setOpenNav] = useState(false);
     const [count, setCount] = useState(1);
 
-
     const toggleNav = () => {
         setOpenNav((prevOpen) => !prevOpen);
     };
 
-    const handleIncrement = () => {
-        setCount((prevCount) => prevCount + 1);
-    };
-
-    const handleDecrement = () => {
-        if (count > 1) {
-            setCount((prevCount) => prevCount - 1);
-        }
-    };
     return (
         <Box sx={{ position: "relative" }}>
 
@@ -59,9 +49,9 @@ function Setting() {
                     sx: { width: NAV_WIDTH },
                 }}
             >
-                <Box sx={{ p: 0.5 }}>
-                    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                        <Typography variant="h6" p={1}>
+                <Box sx={{ p: 2 }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: 'center' }}>
+                        <Typography variant="h6">
                             Setting
                         </Typography>
                         <Box>
@@ -74,25 +64,25 @@ function Setting() {
                                 <CloseIcon />
                             </IconButton>
                         </Box>
-                        {/* <IconButton variant="contained" component={Link} to="/">
-                            <KeyboardDoubleArrowRightIcon />
-                        </IconButton> */}
                     </Box>
 
-                    <Divider sx={{ mb: 1 }} />
+                    <Divider sx={{ my: 1.5 }} />
 
-                    <Grid container spacing={0.5}>
+                    <Box>
+                        <Grid container spacing={0.5}>
 
-                        <Grid item xs={6}>
-                            <LightMood />
+                            <Grid item xs={6}>
+                                <LightMood />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <DarkMood />
+                            </Grid>
+
+
                         </Grid>
-
-                        <Grid item xs={6}>
-                            <DarkMood />
-                        </Grid>
-
                         <FullScreenToggle />
-                    </Grid>
+                    </Box>
                 </Box>
 
             </Drawer>

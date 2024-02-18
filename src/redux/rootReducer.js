@@ -8,6 +8,7 @@ import cartReducer from './features/cart/cartSlice';
 import themeReducer from './features/theme/themeSlice';
 import searchReducer from './features/serach/searchSlice';
 import relatedProductReducer from './features/product/relatedProductSlice';
+import { productsApi } from './services/productsApi';
 
 
 // rootReducer for large or scale-up application 
@@ -19,6 +20,10 @@ const rootReducer = combineReducers({
   search: searchReducer,
   cart: cartReducer,
   theme: themeReducer,
+  [productsApi.reducerPath] : productsApi.reducer,
+
+
+  
 });
 
 export default rootReducer; // it should be export this way .
