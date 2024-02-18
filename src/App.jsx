@@ -16,8 +16,6 @@ function App() {
 
   const theme = useTheme()
 
- 
-
   const { data, error, isLoading } = useGetProductsQuery()
   console.log(data, '22')
 
@@ -32,7 +30,7 @@ function App() {
     dispatch(fetchProducts());
   }, [dispatch]); // The empty dependency array ensures this effect runs only once when the component mounts
 
-  if (products.isLoading) {
+  if (isLoading) {
     return <h2>Loading...</h2>
   }
 
@@ -67,31 +65,32 @@ function App() {
         {/* <FlashingTime  targetDate={targetDate}/> */}
 
         <div style={cardStyle}>
-          {products.entities && products.entities.map(product => (
-            <React.Fragment key={product.id} >
-              <Paper>
+          {
+            data.map(product => (
+              <React.Fragment key={product.id} >
+                <Paper>
 
-                <div>
+                  <div>
 
-                  <p>{product.title.substring(0, 28)}...</p>
-                  <Link to={`/product/${product.id}`}>
-                    <img style={{ width: 300 }} src={product.images[0]} alt={product.name} />
-                  </Link>
-                  {/*  <button onClick={handleAddToCart}>Add to Cart</button> 
+                    <p>{product.title.substring(0, 28)}...</p>
+                    <Link to={`/product/${product.id}`}>
+                      <img style={{ width: 300 }} src={product.images[0]} alt={product.name} />
+                    </Link>
+                    {/*  <button onClick={handleAddToCart}>Add to Cart</button> 
                 // is not recommendation method  */}
 
-                  <br />
-                  {/* <button onClick={() => handleAddToCart(product)}>Add to Cart</button> */}
-                  <Button onClick={() => handleAddToCart(product)} variant="contained">Add to Card</Button>
+                    <br />
+                    {/* <button onClick={() => handleAddToCart(product)}>Add to Cart</button> */}
+                    <Button onClick={() => handleAddToCart(product)} variant="contained">Add to Card</Button>
 
 
-                </div>
-              </Paper>
+                  </div>
+                </Paper>
 
 
-              {/* // is recommendation  */}
-            </React.Fragment>
-          ))}
+                {/* // is recommendation  */}
+              </React.Fragment>
+            ))}
         </div>
         {/* <Products /> */}
       </MainLayout>

@@ -10,6 +10,7 @@ import { fetchRelatedProducts } from '../redux/features/product/relatedProductSl
 import Loading from '../compoments/Loading';
 import RelatedSliderProduct from '../compoments/RelatedSliderProduct';
 import { Button } from '@mui/material';
+import { useGetProductIDQuery } from '../redux/services/productsApi';
 
 const ProductDetails = () => {
     const { productId } = useParams();
@@ -18,6 +19,10 @@ const ProductDetails = () => {
     const relatedProducts = useSelector((state) => state.relatedProduct.relatedProducts);
     const isLoading = useSelector((state) => state.product.detailsLoading);
     const isError = useSelector((state) => state.product.detailsError);
+
+
+    const {data} = useGetProductIDQuery(productId)
+    console.log(data, 25)
 
     const [currentImage, setCurrentImage] = useState(0);
 

@@ -1,5 +1,4 @@
-/* React-specific entry point that automatically generates
-   hooks corresponding to the defined endpoints */
+
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const productsApi = createApi({
@@ -9,9 +8,11 @@ export const productsApi = createApi({
         getProducts: builder.query({
             query: () => `/products`,
         }),
+        getProductID: builder.query({
+            query: (id) => `/products/${id}`,
+            // providesTags: (result, error, id) => [{ type: 'products', id }],
+          }),
     }),
 })
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
-export const { useGetProductsQuery } = productsApi
+export const { useGetProductsQuery, useGetProductIDQuery } = productsApi
