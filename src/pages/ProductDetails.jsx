@@ -1,114 +1,142 @@
-// ProductDetails.js
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductDetails } from '../redux/features/product/productSlice';
-import { addToCart, decrementQuantity, incrementQuantity } from '../redux/features/cart/cartSlice';
-import InnerImageZoom from 'react-inner-image-zoom';
-import MainLayout from '../layout/MainLayout';
-import { fetchRelatedProducts } from '../redux/features/product/relatedProductSlice';
-import Loading from '../compoments/Loading';
-import RelatedSliderProduct from '../compoments/RelatedSliderProduct';
-import { Button } from '@mui/material';
-import { useGetProductIDQuery } from '../redux/services/productsApi';
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  decrementQuantity,
+  incrementQuantity,
+} from "../redux/features/cart/cartSlice";
+import InnerImageZoom from "react-inner-image-zoom";
+import MainLayout from "../layout/MainLayout";
+import Loading from "../compoments/Loading";
+import RelatedSliderProduct from "../compoments/RelatedSliderProduct";
+import { Button } from "@mui/material";
+import {
+  useGetProductIDQuery,
+  useGetRelatedProductQuery,
+} from "../redux/services/productsApi";
 
 const ProductDetails = () => {
-    const { productId } = useParams();
-    const dispatch = useDispatch();
-    const selectedProduct = useSelector((state) => state.product.selectedProduct);
-    const relatedProducts = useSelector((state) => state.relatedProduct.relatedProducts);
-    const isLoading = useSelector((state) => state.product.detailsLoading);
-    const isError = useSelector((state) => state.product.detailsError);
+  const { productId } = useParams();
+  const dispatch = useDispatch();
+  const {
+    data: selectedProduct,
+    isLoading,
+    isError,
+  } = useGetProductIDQuery(productId);
 
+  const {
+    data: relatedProductsData,
+    isLoading: relatedProductsLoading,
+    isError: relatedProductsError,
+  } = useGetRelatedProductQuery(selectedProduct?.category?.id);
 
-    const {data} = useGetProductIDQuery(productId)
-    console.log(data, 25)
+  const [currentImage, setCurrentImage] = useState(0);
 
-    const [currentImage, setCurrentImage] = useState(0);
+  // Check if the product details are still loading
+  if (isLoading) {
+    return <Loading />;
+  }
 
-    // Fetch product details using the productId
-    useEffect(() => {
-        dispatch(fetchProductDetails(productId));
-    }, [dispatch, productId]);
+  // Check if there was an error fetching product details
+  if (isError) {
+    return <div>Error fetching product details.</div>;
+  }
 
-    // Fetch related products when selectedProduct is available
-    useEffect(() => {
-        if (selectedProduct) {
-            dispatch(fetchRelatedProducts(selectedProduct.category.id));
-        }
-    }, [dispatch, selectedProduct]);
+  // Check if the product details are available
+  if (!selectedProduct) {
+    return <div>No product details available.</div>;
+  }
 
-    // Check if the product details are still loading
-    if (isLoading) {
-        return <Loading />;
-    }
+  const switchImage = (index) => {
+    setCurrentImage(index);
+  };
 
-    // Check if there was an error fetching product details
-    if (isError) {
-        return <div>Error fetching product details.</div>;
-    }
+  const handleAddToCart = () => {
+    dispatch(addToCart(selectedProduct));
+  };
 
-    // Check if the product details are available
-    if (!selectedProduct) {
-        return <div>No product details available.</div>;
-    }
+  return (
+    <>
+      <MainLayout>
+        <div
+          style={{
+            display: "flex",
+            maxWidth: "1200px",
+            margin: "auto",
+            marginTop: "100px",
+            gap: "20px",
+          }}
+        >
+          <div>
+            <InnerImageZoom
+              src={selectedProduct.images[currentImage]}
+              zoomSrc={selectedProduct.images[currentImage]}
+            />
+            <div style={{ display: "flex", gap: "10px" }}>
+              {selectedProduct.images.map((image, index) => (
+                <img
+                  key={index}
+                  style={{ width: "100px", cursor: "pointer" }}
+                  src={image}
+                  alt=""
+                  onClick={() => switchImage(index)}
+                />
+              ))}
+            </div>
+          </div>
+          <div>
+            <h2>Product Details</h2>
+            <p>Product ID: {selectedProduct.id}</p>
+            <p>Title: {selectedProduct.title}</p>
+            <p>Description: {selectedProduct.description}</p>
+            <p>Price per unit: ${selectedProduct.price}</p>
+            <Button variant="contained" onClick={handleAddToCart}>
+              Add to Cart
+            </Button>
+          </div>
+        </div>
 
-    const switchImage = (index) => {
-        setCurrentImage(index);
-    };
+        <h2>Related Products</h2>
 
-    const handleAddToCart = () => {
-        dispatch(addToCart(selectedProduct));
-    };
+        <RelatedSliderProduct
+          data={relatedProductsData ?? []}
+          filterFunction={(products) =>
+            products.filter((product) => product.id !== selectedProduct.id)
+          }
+          mapFunction={(product) => (
+            <div key={product.id}>
+              <Link to={`/product/${product.id}`}>
+                <img
+                  style={{ width: 300 }}
+                  src={product.images[0]}
+                  alt={product.name}
+                />
+              </Link>
+              <p>{product.title}</p>
+            </div>
+          )}
+        />
 
-    return (
-        <>
-            <MainLayout>
-                <div style={{ display: "flex", maxWidth: '1200px', margin: 'auto', marginTop: '100px', gap: '20px' }}>
-                    <div>
-                        <InnerImageZoom src={selectedProduct.images[currentImage]} zoomSrc={selectedProduct.images[currentImage]} />
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                            {selectedProduct.images.map((image, index) => (
-                                <img
-                                    key={index}
-                                    style={{ width: '100px', cursor: 'pointer' }}
-                                    src={image}
-                                    alt=""
-                                    onClick={() => switchImage(index)}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Product Details</h2>
-                        <p>Product ID: {selectedProduct.id}</p>
-                        <p>Title: {selectedProduct.title}</p>
-                        <p>Description: {selectedProduct.description}</p>
-                        <p>Price per unit: ${selectedProduct.price}</p>
-                        <Button variant="contained" onClick={handleAddToCart}>Add to Cart</Button>
-                    </div>
-                </div>
-
-                <h2>Related Products</h2>
-                {relatedProducts.length > 0 && (
-                    <RelatedSliderProduct >
-                        {/* Exclude the selected product from the list */}
-                        {relatedProducts
-                            .filter(product => product.id !== selectedProduct.id)
-                            .map((product) => (
-                                <div key={product.id}>
-                                    <Link to={`/product/${product.id}`}>
-                                        <img style={{ width: 300 }} src={product.images[0]} alt={product.name} />
-                                    </Link>
-                                    <p>{product.title}</p>
-                                    {/* Display other related product details */}
-                                </div>
-                            ))}
-                    </RelatedSliderProduct>
-                )}
-            </MainLayout>
-        </>
-    );
+        {/* <RelatedSliderProduct>
+          {(relatedProductsData ?? [])
+            ?.filter((product) => product.id !== selectedProduct.id)
+            ?.map((product) => (
+              <div key={product.id}>
+                <Link to={`/product/${product.id}`}>
+                  <img
+                    style={{ width: 300 }}
+                    src={product.images[0]}
+                    alt={product.name}
+                  />
+                </Link>
+                <p>{product.title}</p>
+              </div>
+            ))}
+        </RelatedSliderProduct> */}
+      </MainLayout>
+    </>
+  );
 };
 
 export default ProductDetails;
